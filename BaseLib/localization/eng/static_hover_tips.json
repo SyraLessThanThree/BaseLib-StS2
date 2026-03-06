@@ -1,4 +1,4 @@
 {
   "BASELIB-PERSIST.title": "Persist",
-  "BASELIB-PERSIST.description": "This card returns to your hand the first {Persist:cond:>1?[blue]{Persist}[/blue] |}{Persist:plural:time|times} it is played each turn.",
+  "BASELIB-PERSIST.description": "This card returns to your hand the first {Persist:cond:>1?[blue]{Persist}[/blue] |}{Persist:plural:time|times} it is played each turn."
 }
