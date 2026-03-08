@@ -19,7 +19,7 @@ up to 3 rows. If 3 rows is full, shrink and increase number of elements per row 
 PlayCardAction : allow _card.SpendResources to spend custom resources, and also pass that value to a custom OnPlayWrapper if the card is a CustomCard?
 Ideally works for non-CustomCard as well
 
-
+NMouseCardPlay handles dragging before card is actually played
 
 
 

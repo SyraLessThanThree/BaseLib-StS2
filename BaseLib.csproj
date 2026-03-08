@@ -88,11 +88,13 @@
         <None Include="README.md" Pack="true" PackagePath="/"/>
         <None Include=".gitignore" />
         <None Include="Notes.txt" />
+        <None Include="export_presets.cfg" />
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="build\BaseLib.props" PackagePath="/Content/"/>
-        <Content Include="build\BaseLib.pck" PackagePath="/Content/"/>
+        <!-- Temporary for including in .nupkg for template to auto export to mods folder -->
+        <Content Include="build\BaseLib.props" PackagePath="/Content/" />
+        <Content Include="build\BaseLib.pck" PackagePath="/Content/" />
     </ItemGroup>
 
     <Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent">
@@ -102,7 +104,7 @@
 
     <Target Name="GodotPublish" AfterTargets="Publish" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)') and '$(IsInnerGodotExport)' != 'true'">
         <Message Text="Exporting Godot .pck to build folder" Importance="high"/>
-        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;Windows Desktop&quot; &quot;build/$(MSBuildProjectName).pck&quot;"
+        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;build/$(MSBuildProjectName).pck&quot;"
               EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
               ContinueOnError="WarnAndContinue"/>
         <Message Text="Copying Godot .pck to mods folder" Importance="high"/>
