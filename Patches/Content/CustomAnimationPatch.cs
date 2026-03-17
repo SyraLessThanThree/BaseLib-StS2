@@ -5,6 +5,7 @@ using MegaCrit.Sts2.Core.Nodes.Combat;
 
 namespace BaseLib.Patches.Content
 {
+    [HarmonyPatch(typeof(NCreature), nameof(NCreature.SetAnimationTrigger))]
     class CustomAnimationPatch
     {
         [HarmonyPrefix]
