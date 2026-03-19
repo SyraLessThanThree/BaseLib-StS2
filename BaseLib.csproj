@@ -17,9 +17,9 @@
         <PackageId>Alchyr.Sts2.BaseLib</PackageId>
         <Title>BaseLib-StS2</Title>
         <Description>Mod for Slay the Spire 2 providing utilities and features for other mods.</Description>
-        <Version>0.1.7</Version>
+        <Version>0.1.8</Version>
         <Authors>Alchyr</Authors>
-        <PackageReleaseNotes>localization forgiveness, ease of adding UI to cards/relics</PackageReleaseNotes>
+        <PackageReleaseNotes>log window cmd</PackageReleaseNotes>
         <PackageTags>c#</PackageTags>
         <NoWarn>$(NoWarn);NU5128;MSB3270</NoWarn>
 
