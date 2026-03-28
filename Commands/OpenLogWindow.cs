@@ -1,4 +1,4 @@
-﻿using BaseLib.BaseLibScenes;
+using BaseLib.BaseLibScenes;
 using Godot;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.DevConsole;
@@ -31,7 +31,7 @@ public class OpenLogWindow : AbstractConsoleCmd
         window.GuiEmbedSubwindows = false;
         
         var scene = PreloadManager.Cache.GetScene("res://BaseLib/scenes/LogWindow.tscn").Instantiate<NLogWindow>();
-        scene.Size = DisplayServer.ScreenGetSize() * 2 / 3;
+        LogWindowPlacement.ApplyHostWindowDefaults(scene, window);
         window.AddChildSafely(scene);
     }
 }

@@ -24,6 +24,7 @@ public partial class NLogWindow : Window
 
     private ScrollContainer? _scrollContainer;
     private RichTextLabel? _logLabel;
+    private Label? _logLevelLabel;
     private OptionButton? _logLevelDropdown;
     private LineEdit? _filterInput;
     private Button? _regexButton;
@@ -58,6 +59,7 @@ public partial class NLogWindow : Window
 
         _scrollContainer = GetNode<ScrollContainer>("MainVBox/Scroll");
         _logLabel = GetNode<RichTextLabel>("MainVBox/Scroll/Log");
+        _logLevelLabel = GetNode<Label>("MainVBox/TopBarContainer/TopBarHBox/LogLevelLabel");
         _logLevelDropdown = GetNode<OptionButton>("MainVBox/TopBarContainer/TopBarHBox/LogLevelOption");
         _filterInput = GetNode<LineEdit>("MainVBox/TopBarContainer/TopBarHBox/FilterText");
         _regexButton = GetNode<Button>("MainVBox/TopBarContainer/TopBarHBox/RegexButton");
@@ -91,7 +93,29 @@ public partial class NLogWindow : Window
         _isFollowingLog = true;
 
         SetFontSize(_currentFontSize, false);
+        ApplyMinSizeForScale();
         UpdateFilter(); // Also calls Refresh()
+    }
+
+    private void ApplyMinSizeForScale()
+    {
+        float s = ContentScaleFactor > 0f ? ContentScaleFactor : 1f;
+        MinSize = new Vector2I((int)(360 * s), (int)(66 * s));
+    }
+
+    private void ApplyChromeFontSize(int size)
+    {
+        _logLevelLabel?.AddThemeFontSizeOverrideAll(size);
+        _logLevelDropdown?.AddThemeFontSizeOverrideAll(size);
+        _filterInput?.AddThemeFontSizeOverrideAll(size);
+        _regexButton?.AddThemeFontSizeOverrideAll(size);
+        _inverseButton?.AddThemeFontSizeOverrideAll(size);
+
+        int dim = Mathf.Max(28, (int)(size * 1.25f));
+        if (_regexButton is not null)
+            _regexButton.CustomMinimumSize = new Vector2(dim, dim);
+        if (_inverseButton is not null)
+            _inverseButton.CustomMinimumSize = new Vector2(dim, dim);
     }
 
     private void UpdateFilter()
@@ -223,6 +247,7 @@ public partial class NLogWindow : Window
     private void SetFontSize(int newSize, bool save = true)
     {
         _logLabel?.AddThemeFontSizeOverrideAll(newSize);
+        ApplyChromeFontSize(newSize);
         _currentFontSize = newSize;
         ScrollToBottomAsync();
 
