@@ -34,7 +34,7 @@ corner_radius_bottom_left = 3
 
 [node name="LogWindow" type="Window"]
 title = "Log"
-initial_position = 3
+initial_position = 0
 size = Vector2i(600, 400)
 current_screen = 0
 transient = true
