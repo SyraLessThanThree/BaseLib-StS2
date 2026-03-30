@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using BaseLib.Utils.NodeFactories;
 using Godot;
 using MegaCrit.Sts2.Core.Assets;

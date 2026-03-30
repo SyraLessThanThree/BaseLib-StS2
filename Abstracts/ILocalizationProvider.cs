@@ -1,4 +1,6 @@
-﻿namespace BaseLib.Abstracts;
+﻿using System.Collections.Generic;
+
+namespace BaseLib.Abstracts;
 
 //TODO - Add additional information to each class on anything that should be noted when writing its localization.
 

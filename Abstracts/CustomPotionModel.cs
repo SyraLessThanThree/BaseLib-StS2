@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using HarmonyLib;
 using BaseLib.Patches.Content;
 using MegaCrit.Sts2.Core.Helpers;

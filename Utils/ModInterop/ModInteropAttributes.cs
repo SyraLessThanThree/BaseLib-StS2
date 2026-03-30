@@ -1,4 +1,6 @@
-﻿namespace BaseLib.Utils.ModInterop;
+﻿using System;
+
+namespace BaseLib.Utils.ModInterop;
 
 /// <summary>
 /// Will patch methods, properties and classes in this class to reference methods/properties/fields/classes from another mod,

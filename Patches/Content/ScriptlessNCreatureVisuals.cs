@@ -1,4 +1,5 @@
-﻿using BaseLib.Abstracts;
+﻿using System;
+using BaseLib.Abstracts;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Assets;

@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using BaseLib.Patches.Utils;
 using MegaCrit.Sts2.Core.Models;
