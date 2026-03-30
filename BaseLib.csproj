@@ -6,14 +6,21 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <AppOutputBase>$(MSBuildProjectDirectory)\</AppOutputBase>
         <PathMap>$(AppOutputBase)=.\</PathMap>
+
+
+        <ExportName>$(MSBuildProjectName)_syra</ExportName>
+
     </PropertyGroup>
+
+
 
     <!-- NuGet Package Configuration -->
     <PropertyGroup>
         <IsPackable>true</IsPackable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <OutputPath>publish/</OutputPath>
-        
+        <TargetName>$(ExportName)</TargetName>
+
         <PackageId>Alchyr.Sts2.BaseLib</PackageId>
         <Title>BaseLib-StS2</Title>
         <Description>Mod for Slay the Spire 2 providing utilities and features for other mods.</Description>
@@ -49,11 +56,11 @@
         <Sts2Path Condition="'$(Sts2Path)' == ''">$([MSBuild]::GetRegistryValueFromView('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 2868840', 'InstallLocation', '', RegistryView.Registry64, RegistryView.Registry32))</Sts2Path>
         <AutoSteamPath>$(registry:HKEY_CURRENT_USER\Software\Valve\Steam@SteamPath)\steamapps</AutoSteamPath>
         <SteamLibraryPath Condition="'$(SteamLibraryPath)' == '' and Exists('$(AutoSteamPath)/common/Slay the Spire 2')">$(AutoSteamPath)</SteamLibraryPath>
-        
+
         <!-- If on Windows and Slay the Spire 2 is not installed in your default steam library, adjust the following.-->
         <SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">C:/Program Files (x86)/Steam/steamapps</SteamLibraryPath>
-        <GodotPath>Z:\Projects\sts2\megadot\MegaDot_v4.5.1-stable_mono_win64.exe</GodotPath>
-        
+        <GodotPath>H:\Games\Slay the Spire 2\CustomMods\megadot-4.5.1-m.8-windows-x86_64-llvm-editor-csharp\MegaDot_v4.5.1-stable_mono_win64.exe</GodotPath>
+
         <Sts2Path Condition="'$(Sts2Path)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
         <Sts2DataDir Condition="'$(Sts2DataDir)' == ''">$(Sts2Path)/data_sts2_windows_x86_64</Sts2DataDir>
     </PropertyGroup>
@@ -62,8 +69,8 @@
     <PropertyGroup Condition="'$(IsLinux)' == 'true'">
         <SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">$(HOME)/.local/share/Steam/steamapps</SteamLibraryPath>
         <GodotPath Condition="'$(GodotPath)' == ''">$(HOME)/bin/megadot/megadot</GodotPath>
-        
-        
+
+
         <Sts2Path Condition="'$(Sts2Path)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
         <Sts2DataDir Condition="'$(Sts2DataDir)' == ''">$(Sts2Path)/data_sts2_linuxbsd_x86_64</Sts2DataDir>
     </PropertyGroup>
@@ -73,8 +80,8 @@
     <PropertyGroup Condition="'$(IsOSX)' == 'true'">
         <SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">$(HOME)/Library/Application Support/Steam/steamapps</SteamLibraryPath>
         <GodotPath Condition="'$(GodotPath)' == ''">$(HOME)/</GodotPath>
-        
-        
+
+
         <Sts2Path Condition="'$(Sts2Path)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
         <Sts2DataDir Condition="'$(Sts2DataDir)' == ''">$(Sts2Path)/data_sts2_macos_x86_64</Sts2DataDir>
     </PropertyGroup>
@@ -96,30 +103,32 @@
             <Private>false</Private>
         </Reference>
     </ItemGroup>
-    
+
     <ItemGroup>
         <None Include="$(MSBuildProjectName)\**" />
+        <None Include="$(ExportName)\**" />
         <None Include="LICENSE.txt" />
         <None Include="project.godot" />
         <None Include="README.md" Pack="true" PackagePath="/"/>
         <None Include=".gitignore" />
         <None Include="Notes.txt" />
         <None Include="export_presets.cfg" />
-        <None Include="BaseLib.json" />
+        <None Include="BaseLib_syra.json" />
+        <None Include="BaseLib_syra.json" />
         <None Include="Publish/*" />
         <None Include="**/*.gd" />
     </ItemGroup>
 
     <ItemGroup>
         <!-- For including in .nupkg for template to auto export to mods folder -->
-        <Content Condition="Exists('build\BaseLib.props')" Include="build\BaseLib.props" PackagePath="/Content/" />
-        <Content Condition="Exists('build\BaseLib.pck')" Include="build\$(MSBuildProjectName).pck" PackagePath="/Content/" />
-        <Content Include="$(MSBuildProjectName).json" PackagePath="/Content/" />
+        <Content Include="build\BaseLib.props" PackagePath="/Content/" />
+        <Content Include="build\$(MSBuildProjectName).pck" PackagePath="/Content/" />
+        <Content Include="$(ExportName).json" PackagePath="/Content/" />
     </ItemGroup>
-    
+
     <Target Name="UpdateManifestVersion" BeforeTargets="BeforeBuild">
         <PropertyGroup>
-            <ManifestPath>$(MSBuildProjectName).json</ManifestPath>
+            <ManifestPath>$(ExportName).json</ManifestPath>
         </PropertyGroup>
 
         <PropertyGroup>
@@ -141,17 +150,17 @@
 
     <Target Name="CopyToModsFolderOnBuild" AfterTargets="AfterBuild">
         <Message Text="Copying .dll and manifest to mods folder." Importance="high" />
-        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(Sts2Path)/mods/$(MSBuildProjectName)/" />
-        <Copy SourceFiles="$(MSBuildProjectName).json" DestinationFolder="$(Sts2Path)/mods/$(MSBuildProjectName)/" />
+        <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(Sts2Path)/mods/$(ExportName)/" />
+        <Copy SourceFiles="$(ExportName).json" DestinationFolder="$(Sts2Path)/mods/$(ExportName)/" />
     </Target>
 
     <Target Name="GodotPublish" AfterTargets="Publish" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)') and '$(IsInnerGodotExport)' != 'true'">
         <Message Text="Exporting Godot .pck to build folder" Importance="high"/>
-        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;build/$(MSBuildProjectName).pck&quot;"
+        <Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;build/$(ExportName).pck&quot;"
               EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1"
               ContinueOnError="WarnAndContinue"/>
         <Message Text="Copying Godot .pck to mods folder" Importance="high"/>
-        <Copy SourceFiles="build/$(MSBuildProjectName).pck" DestinationFolder="$(Sts2Path)/mods/$(MSBuildProjectName)/" />
+        <Copy SourceFiles="build/$(ExportName).pck" DestinationFolder="$(Sts2Path)/mods/$(ExportName)/" />
     </Target>
 
     <Target Name="GodotPublishSkipped" AfterTargets="Publish" Condition="'$(GodotPath)' == '' or !Exists('$(GodotPath)')">
